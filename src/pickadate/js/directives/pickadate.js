@@ -56,25 +56,7 @@
             scope.allowPrevMonth = !minDate || initialDate > minDate;
             scope.allowNextMonth = !maxDate || nextMonthInitialDate < maxDate;
 
-            for (var i = 0; i < allDates.length; i++) {
-              var className = "", date = allDates[i];
-
-              if (date < scope.minDate || date > scope.maxDate || dateFilter(date, 'M') !== currentMonth.toString()) {
-                className = 'pickadate-disabled';
-              } else if (indexOf.call(disabledDates, date) >= 0) {
-                className = 'pickadate-disabled pickadate-unavailable';
-              } else {
-                className = 'pickadate-enabled';
-              }
-
-              if (date === today) {
-                className += ' pickadate-today';
-              }
-
-              dates.push({date: date, className: className});
-            }
-
-            scope.dates = dates;
+            scope.dates = buildDates(scope, allDates, today, currentMonth);
           };
 
           scope.setDate = function(dateObj) {
@@ -116,9 +98,56 @@
             return dateUtils.stringToDate(dateString);
           }
 
-          function isDateDisabled(dateObj) {
-            return (/pickadate-disabled/.test(dateObj.className));
+          function buildDates(scope, allDates, today, currentMonth) {
+            var
+              dates = [],
+              len = allDates.length,
+              date,
+              i,
+              className;
+
+            className = getDateClassName(today, currentMonth, disabledDates, scope);
+
+            for (i = 0; i < len; i++) {
+              date = allDates[i];
+              dates.push({ date: date, className: className(date) });
+            }
+
+            return dates;
           }
+
+        }
+
+        function getDateClassName(today, currentMonth, disabledDates, options) {
+          return classNameGetter;
+
+          function classNameGetter(date) {
+            var name = '';
+
+            if (dateOutOfRange(date, options.minDate, options.maxDate, currentMonth)) {
+              name = 'pickadate-disabled';
+            }
+            else if (indexOf.call(disabledDates, date) >= 0) {
+              name = 'pickadate-disabled pickadate-unavailable';
+            }
+            else {
+              name = 'pickadate-enabled';
+            }
+
+            if (date === today) {
+              name += ' pickadate-today';
+            }
+
+            return name;
+          }
+        }
+
+        function dateOutOfRange(date, min, max, currentMonth) {
+          return date < min || date > max || dateFilter(date, 'M') !== currentMonth.toString()
+        }
+
+        function isDateDisabled(dateObj) {
+          return (/pickadate-disabled/.test(dateObj.className));
         }
       }
     ]);

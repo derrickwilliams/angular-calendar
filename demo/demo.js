@@ -7,9 +7,7 @@
     }])
 
     .controller('DemoController', ['$scope', function($scope) {
-      var $s = $scope;
-
-      $s.currentDate = new Date();
+      $scope.currentDate = new Date();
     }]);
 
 })(angular);
