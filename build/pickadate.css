@@ -9,7 +9,7 @@
   padding: 0;
   width: 100%;
   text-align: center;
-  font-size: 0.9em; }
+  font-size: 20px; }
 
 .pickadate a:visited, .pickadate a {
   color: #666666; }
@@ -41,7 +41,6 @@
 
 .pickadate-cell .pickadate-enabled {
   cursor: pointer;
-  font-size: 0.9em;
   color: #666666; }
 
 .pickadate-cell .pickadate-today {
@@ -63,8 +62,11 @@
 .pickadate-centered-heading {
   font-weight: normal;
   text-align: center;
-  font-size: 1em;
   margin: 13px 0 13px 0; }
+  .pickadate-centered-heading .heading-long {
+    display: inline; }
+  .pickadate-centered-heading .heading-short {
+    display: none; }
 
 .pickadate-controls {
   position: absolute;
@@ -75,10 +77,23 @@
   float: right; }
 
 .pickadate-controls a {
-  text-decoration: none;
-  font-size: 0.9em; }
+  text-decoration: none; }
 
 /* Large Devices, Wide Screens */
 /* Medium Devices, Desktops */
 /* Small Devices, Tablets */
 /* Extra Small Devices, Phones */
+@media only screen and (max-width: 480px) {
+  .pickadate-centered-heading .heading-long {
+    display: none; }
+  .pickadate-centered-heading .heading-short {
+    display: inline; }
+
+  .pickadate-main {
+    font-size: 1.9em; }
+
+  .pickadate-cell.pickadate-day-labels {
+    font-size: 0.5em; }
+  .pickadate-cell.pickadate-day-cells {
+    font-size: 0.6em; }
+ }

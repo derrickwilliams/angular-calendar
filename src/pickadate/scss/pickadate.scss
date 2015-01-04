@@ -11,7 +11,7 @@
   padding: 0;
   width: 100%;
   text-align: center;
-  font-size: 12px;
+  font-size: 20px;
 }
 
 .pickadate a:visited, .pickadate a {
@@ -56,7 +56,7 @@
 
 .pickadate-cell .pickadate-enabled {
   cursor: pointer;
-  font-size: 12px;
+//  font-size: 12px;
   color: #666666;
 }
 
@@ -85,8 +85,16 @@
 .pickadate-centered-heading {
   font-weight: normal;
   text-align: center;
-  font-size: 1em;
+//  font-size: 1em;
   margin: 13px 0 13px 0;
+
+  .heading-long {
+    display: inline;
+  }
+
+  .heading-short {
+    display: none;
+  }
 }
 
 .pickadate-controls {
@@ -101,5 +109,5 @@
 
 .pickadate-controls a {
   text-decoration: none;
-  font-size: 0.9em;
+//  font-size: 0.9em;
 }

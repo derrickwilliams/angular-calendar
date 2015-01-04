@@ -29,6 +29,7 @@
             currentDate   = scope.initialDate || pickadateOptions.initialDateDefault;
 
           scope.dayNames    = $locale.DATETIME_FORMATS[pickadateOptions.dayNameFormat];
+          scope.dayNameInitials = getInitials(scope.dayNames);
           scope.currentDate = currentDate;
 
           scope.render = function(initialDate) {
@@ -100,6 +101,16 @@
             currentDate.setMonth(currentDate.getMonth() + offset);
             scope.render(currentDate);
           };
+
+          function getInitials(names) {
+            var len = names.length, initials = [], i = 0;
+
+            while (i < len) {
+              initials.push(names[i++][0]);
+            }
+
+            return initials;
+          }
 
           function makeDate(dateString) {
             return dateUtils.stringToDate(dateString);

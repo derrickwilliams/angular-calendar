@@ -1,8 +1,0 @@
-/* Large Devices, Wide Screens */
-/* Medium Devices, Desktops */
-/* Small Devices, Tablets */
-/* Extra Small Devices, Phones */
-@media only screen and (max-width: 480px) {
-  .pickadate-main {
-    font-size: 2em; }
- }

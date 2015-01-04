@@ -1,5 +1,8 @@
-$mobile-font-size: 2em;
+$font-size-main: 1.9em;
+$font-size-day-labels: .5em;
+$font-size-day-cells: .6em;
 
+$mobile-day-header-font-size: 1.75em;
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
 
@@ -17,12 +20,29 @@ $mobile-font-size: 2em;
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
-//  .pickadate-main {
-//    font-size: $mobile-font-size;
-//  }
-//
-//  .pickadate-cell .pickadate-enabled {
-//    font-size: $mobile-font-size;
-//  }
+  .pickadate-centered-heading {
+    .heading-long {
+      display: none;
+    }
+
+    .heading-short {
+      display: inline;
+    }
+  }
+
+  .pickadate-main {
+    font-size: $font-size-main;
+  }
+
+  .pickadate-cell {
+
+    &.pickadate-day-labels {
+      font-size: $font-size-day-labels;
+    }
+
+    &.pickadate-day-cells {
+      font-size: $font-size-day-cells;
+    }
+  }
 }
 
