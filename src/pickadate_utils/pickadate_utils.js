@@ -2,6 +2,7 @@
   angular.module('pickadate.utils', [])
 
     .factory('pickadateUtils.indexOf', [pickadateUtilsIndexOf])
+    .factory('pickadateUtils.errors', [pickadateUtilsErrors])
     .factory('pickadateUtils', ['dateFilter', pickadateUtils]);
 
   function pickadateUtils(dateFilter) {
@@ -49,6 +50,27 @@
       }
       return -1;
     };
+  }
+
+  function pickadateUtilsErrors() {
+    var self;
+
+    self = {
+      create: createError,
+      throw: throwError
+    };
+
+    return self;
+
+    function createError(msg, inner) {
+      var newErr = new Error(msg);
+      if (inner) newErr.innerError = inner;
+      return newError;
+    }
+
+    function throwError(msg, inner) {
+      throw self.createError(msg, inner);
+    }
   }
 
 })(angular);

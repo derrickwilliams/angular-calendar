@@ -2,6 +2,10 @@
 
   angular.module('pickadate.demo', ['pickadate'])
 
+    .config(['pickadateOptionsProvider', function(pickadateOptionsProvider) {
+
+    }])
+
     .controller('DemoController', ['$scope', function($scope) {
       var $s = $scope;
 

@@ -9,7 +9,7 @@
   padding: 0;
   width: 100%;
   text-align: center;
-  font-size: 12px; }
+  font-size: 0.9em; }
 
 .pickadate a:visited, .pickadate a {
   color: #666666; }
@@ -41,7 +41,7 @@
 
 .pickadate-cell .pickadate-enabled {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 0.9em;
   color: #666666; }
 
 .pickadate-cell .pickadate-today {
@@ -77,3 +77,8 @@
 .pickadate-controls a {
   text-decoration: none;
   font-size: 0.9em; }
+
+/* Large Devices, Wide Screens */
+/* Medium Devices, Desktops */
+/* Small Devices, Tablets */
+/* Extra Small Devices, Phones */

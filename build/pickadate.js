@@ -2,6 +2,7 @@
   angular.module('pickadate.utils', [])
 
     .factory('pickadateUtils.indexOf', [pickadateUtilsIndexOf])
+    .factory('pickadateUtils.errors', [pickadateUtilsErrors])
     .factory('pickadateUtils', ['dateFilter', pickadateUtils]);
 
   function pickadateUtils(dateFilter) {
@@ -51,11 +52,75 @@
     };
   }
 
+  function pickadateUtilsErrors() {
+    var self;
+
+    self = {
+      create: createError,
+      throw: throwError
+    };
+
+    return self;
+
+    function createError(msg, inner) {
+      var newErr = new Error(msg);
+      if (inner) newErr.innerError = inner;
+      return newError;
+    }
+
+    function throwError(msg, inner) {
+      throw self.createError(msg, inner);
+    }
+  }
+
 })(angular);
 
 ;(function(angular){
-  angular.module('pickadate', ['pickadate.templates', 'pickadate.utils']);
+
+  angular
+    .module('pickadate', [
+      'pickadate.templates', 'pickadate.utils'
+    ]);
+
 })(window.angular);
+
+(function(angular) {
+
+  angular.module('pickadate')
+    .provider('pickadateOptions', pickadateOptionsProvider);
+
+
+  function pickadateOptionsProvider() {
+    var pickadateOptions;
+
+    pickadateOptions = {
+      dayNameFormat: 'SHORTDAY',
+      todayDateFormat: 'yyyy-MM-dd',
+      initialDateDefault: new Date(),
+      minDate: new Date(1980, 1, 1),
+      maxDate: new Date(3000, 1, 1)
+    };
+
+    this.set = setOption;
+
+    this.$get = [pickadateOptionsProvider];
+
+    function pickadateOptionsProvider() {
+      return PickadateOptions(pickadateOptions);
+    }
+
+    function setOption(name, value) {
+      if (value === undefined) return;
+      //if (!validOption(name)) return;
+      pickadateOptions[name] = value;
+    }
+  }
+
+  function PickadateOptions(pickadateOptions) {
+    return pickadateOptions;
+  }
+
+})(angular);
 
 (function(angular) {
 
@@ -64,9 +129,10 @@
       '$locale',
       'pickadateUtils',
       'pickadateUtils.indexOf',
+      'pickadateOptions',
       'dateFilter',
 
-      function pickadateDirective($locale, dateUtils, indexOf, dateFilter) {
+      function pickadateDirective($locale, dateUtils, indexOf, pickadateOptions, dateFilter) {
         return {
           require: 'ngModel',
           scope: {
@@ -84,9 +150,9 @@
             minDate       = scope.minDate && makeDate(scope.minDate),
             maxDate       = scope.maxDate && makeDate(scope.maxDate),
             disabledDates = scope.disabledDates || [],
-            currentDate   = scope.initialDate || new Date();
+            currentDate   = scope.initialDate || pickadateOptions.initialDateDefault;
 
-          scope.dayNames    = $locale.DATETIME_FORMATS['SHORTDAY'];
+          scope.dayNames    = $locale.DATETIME_FORMATS[pickadateOptions.dayNameFormat];
           scope.currentDate = currentDate;
 
           scope.render = function(initialDate) {
@@ -100,7 +166,7 @@
               nextMonthDates    = dateUtils.dateRange(1, 7 - lastDate.getDay(), lastDate),
               allDates          = prevDates.concat(currentMonthDates, nextMonthDates),
               dates             = [],
-              today             = dateFilter(new Date(), 'yyyy-MM-dd');
+              today             = dateFilter(new Date(), pickadateOptions.todayDateFormat);
 
             // Add an extra row if needed to make the calendar to have 6 rows
             if (allDates.length / 7 < 6) {

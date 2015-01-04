@@ -15,7 +15,11 @@ gulp.task('build:scripts', function() {
 });
 
 gulp.task('build:styles', function() {
-  return gulp.src(['src/pickadate/scss/**/*.scss'])
+  return gulp.src([
+      'src/pickadate/scss/pickadate.scss',
+      'src/pickadate/scss/**/*.scss'
+    ])
+    .pipe(concat('pickadate.css'))
     .pipe(sass())
     .pipe(gulp.dest('build/'));
 });

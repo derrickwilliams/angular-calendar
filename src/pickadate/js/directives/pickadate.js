@@ -5,9 +5,10 @@
       '$locale',
       'pickadateUtils',
       'pickadateUtils.indexOf',
+      'pickadateOptions',
       'dateFilter',
 
-      function pickadateDirective($locale, dateUtils, indexOf, dateFilter) {
+      function pickadateDirective($locale, dateUtils, indexOf, pickadateOptions, dateFilter) {
         return {
           require: 'ngModel',
           scope: {
@@ -25,9 +26,9 @@
             minDate       = scope.minDate && makeDate(scope.minDate),
             maxDate       = scope.maxDate && makeDate(scope.maxDate),
             disabledDates = scope.disabledDates || [],
-            currentDate   = scope.initialDate || new Date();
+            currentDate   = scope.initialDate || pickadateOptions.initialDateDefault;
 
-          scope.dayNames    = $locale.DATETIME_FORMATS['SHORTDAY'];
+          scope.dayNames    = $locale.DATETIME_FORMATS[pickadateOptions.dayNameFormat];
           scope.currentDate = currentDate;
 
           scope.render = function(initialDate) {
@@ -41,7 +42,7 @@
               nextMonthDates    = dateUtils.dateRange(1, 7 - lastDate.getDay(), lastDate),
               allDates          = prevDates.concat(currentMonthDates, nextMonthDates),
               dates             = [],
-              today             = dateFilter(new Date(), 'yyyy-MM-dd');
+              today             = dateFilter(new Date(), pickadateOptions.todayDateFormat);
 
             // Add an extra row if needed to make the calendar to have 6 rows
             if (allDates.length / 7 < 6) {
